@@ -1,7 +1,6 @@
 import { User } from '../../model/user.js';
 export const user_services = {
     async findAllUsers() {
-
         return User.find().sort({ createdAt: -1 });
     },
     async findUserbyId(id) {
