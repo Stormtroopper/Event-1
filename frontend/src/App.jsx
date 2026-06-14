@@ -9,6 +9,7 @@ import UploadFile from "./pages/UploadFile";
 import ExtractionHistory from "./pages/ExtractionHistory";
 import ExtractionDetails from "./pages/ExtractionDetails";
 import NotFound from "./pages/NotFound";
+import ProtectedRoutes from "../protection/ProtectedRoutes";
 
 function App() {
   return (
@@ -18,10 +19,12 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route element={<ProtectedRoutes />}>
 
-        <Route path="/upload" element={<UploadFile />} />
-        <Route path="/history" element={<ExtractionHistory />} />
-        <Route path="/extraction/:id" element={<ExtractionDetails />} />
+          <Route path="/upload" element={<UploadFile />} />
+          <Route path="/history" element={<ExtractionHistory />} />
+          <Route path="/extraction/:id" element={<ExtractionDetails />} />
+        </Route>
 
         <Route path="*" element={<NotFound />} />
       </Routes>
