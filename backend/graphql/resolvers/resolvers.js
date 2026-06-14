@@ -1,5 +1,5 @@
-import { userProvider } from "./providers/user.provider.js";
-import { fileProvider } from "./providers/file.provider.js";
+import { userProvider } from "../providers/user_provider";
+import { fileProvider } from "../providers/file_providers";
 
 export const resolvers = {
   Query: {

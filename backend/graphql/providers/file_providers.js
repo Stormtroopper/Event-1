@@ -2,7 +2,7 @@ import { file_services } from "../services/file_services";
 export const file_provider = {
     async getExtraction() {
         try {
-            return file_services.getFileExtractions();
+            return await file_services.getFileExtractions();
         }
         catch (error) {
             console.error('Cant file the files!');
@@ -10,7 +10,7 @@ export const file_provider = {
     },
     async getExtractionById(id) {
         try {
-            const file = await file_services.getFileExtractions(id);
+            const file = await file_services.getFileExtractionById(id);
             if (!file) {
                 throw new Error('Bitch fetch me the right file!')
             }
@@ -20,7 +20,7 @@ export const file_provider = {
             console.error(`Cant find the file ${id}`);
         }
     },
-    async deleteExtraction() {
+    async deleteExtraction(id) {
         try {
             const deletedFile = await file_services.deleteFileExtraction(id);
             if (!deletedFile) throw new Error('deletion unsuccesfull.');

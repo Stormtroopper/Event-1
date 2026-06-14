@@ -50,7 +50,7 @@ export const user_provider = {
             return updated_user;
         }
         catch (error) {
-            console.error(`Error updating user ${id}`);
+            console.error(`Error updating user ${args.id}`);
         }
     },
     async loginUser(args) {
@@ -58,7 +58,7 @@ export const user_provider = {
             const { email, password } = args;
             const loggedInUser = await user_services.findUserByEmailWithPassword(email);
             if (!loggedInUser) throw new Error(`${email} user doesnt exist`);
-            const password_match = bcrypt.compare(password, loggedInUser.password);
+            const password_match = await bcrypt.compare(password, loggedInUser.password);
             if (!password_match) throw new Error(`${password}'s dont match!Try Again dumbass`)
 
             loggedInUser.lastLoginAt = new Date();
@@ -70,7 +70,7 @@ export const user_provider = {
             }
         }
         catch (error) {
-            console.error(`Error Logging in user ${email}}`);
+            console.error(`Error Logging in user ${args.email}}`);
         }
     },
     async deleteUser(id) {

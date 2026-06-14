@@ -1,4 +1,4 @@
-import { User } from '../../model/user.js';
+import { User } from '../../model/user';
 export const user_services = {
     async findAllUsers() {
         return User.find().sort({ createdAt: -1 });

@@ -6,7 +6,7 @@ const allowedMimeTypes=[
     "image/jpeg",
     "application/vnd.ms-excel"
 ];
-const uploading=multer=({
+const uploading=multer({
     dest:'/upload',
     limits:{
         fileSize:50*1024*1024
