@@ -9,7 +9,7 @@ import UploadFile from "./pages/UploadFile";
 import ExtractionHistory from "./pages/ExtractionHistory";
 import ExtractionDetails from "./pages/ExtractionDetails";
 import NotFound from "./pages/NotFound";
-import ProtectedRoutes from "../protection/ProtectedRoutes";
+import ProtectedRoutes from "./protection/ProtectedRoutes";
 
 function App() {
   return (

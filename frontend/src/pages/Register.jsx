@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { SIGNUP_USER } from '../graphql/mutations/mutations.js'
+import { useMutation } from '@apollo/client/react'
 
 const Register = () => {
   const navigate = useNavigate();
-
+  const [createUser, { loading, error }] = useMutation(SIGNUP_USER)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,21 +20,33 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
+      if (formData.password !== formData.confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+
+      console.log("Register Data:", formData);
+
+      // Later: call your backend register API here
+      // Example:
+      // const response = await fetch(`${api}/register`, {...})
+      const data = await createUser({
+        variables: {
+          email: formData.email,
+          password: formData.password,
+          name: formData.name
+        },
+      })
+      const name = data.createUser.name;
+      alert(`Successfully registered the user ${name} fuckface!`)
+      navigate("/");
+    } catch (error) {
+      console.error(`Error signing up ${error.message}`);
     }
-
-    console.log("Register Data:", formData);
-
-    // Later: call your backend register API here
-    // Example:
-    // const response = await fetch(`${api}/register`, {...})
-
-    navigate("/login");
   };
 
   return (
@@ -43,7 +57,7 @@ const Register = () => {
           className="inline-flex items-center gap-2 text-slate-400 hover:text-blue-400 transition"
         >
           <span className="text-2xl">←</span>
-          
+
         </Link>
       </div>
       <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-lg">
@@ -52,6 +66,7 @@ const Register = () => {
           <p className="mt-2 text-slate-400">
             Register to upload PDFs and view extraction history.
           </p>
+          {error && (<p className="bg-red-500/20 text-red-400 p-3 rounded-md mb-4">{error.message}</p>)}
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
@@ -117,9 +132,10 @@ const Register = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full py-3 font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition"
           >
-            Register
+            {loading ? 'Register' : 'Submit'}
           </button>
         </form>
 

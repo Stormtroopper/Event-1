@@ -1,4 +1,4 @@
-import { extractionOptions } from "options/extraction_options";
+import { extractionOptions } from "@/options/extraction_options";
 import React from "react";
 import { Link } from "react-router-dom";
 
