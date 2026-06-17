@@ -6,6 +6,7 @@ import {expressMiddleware} from '@as-integrations/express5';
 import { typeDefs } from './graphql/typeDefs/typeDefs.js';
 import { resolvers } from './graphql/resolvers/resolvers.js';
 import mongoose from 'mongoose';
+import { User } from './model/user.js';
 const app = express();
 const mongoUri = process.env.MONGO_URI;
 console.log(mongoUri);
@@ -47,16 +48,38 @@ async function startServer() {
     // app.use('/api/files', fileRoutes);
 
     // GraphQL route
-    app.use(
-        '/graphql',
-        expressMiddleware(apolloServer, {
-            context: async ({ req }) => {
-                return {
-                    req,
-                };
-            },
-        })
-    );
+app.use(
+  "/graphql",
+  expressMiddleware(apolloServer, {
+    context: async ({ req }) => {
+      const authHeader = req.headers.authorization || "";
+
+      if (!authHeader.startsWith("Bearer ")) {
+        return {
+          user: null,
+          userId: null,
+        };
+      }
+
+      try {
+        const token = authHeader.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const user = await User.findById(decoded.userId);
+
+        return {
+          user,
+          userId: user?._id,
+        };
+      } catch (error) {
+        return {
+          user: null,
+          userId: null,
+        };
+      }
+    },
+  })
+);
     // Global error handler
     app.use((err, req, res, next) => {
         console.error(err);

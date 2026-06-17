@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import { user_services } from '../services/user_services';
-import createToken from '../resolvers/auth/authenticate';
+import { user_services } from '../services/user_services.js';
+import createToken from '../resolvers/auth/authenticate.js';
 
 export const user_provider = {
     async getAllUsers() {
@@ -24,7 +24,7 @@ export const user_provider = {
     },
     async createUser(args) {
         try {
-            const existing_user = user_services.findUserByEmail(args.email);
+            const existing_user = await user_services.findUserByEmail(args.email);
             if (existing_user) {
                 throw new Error("Email exists you noob")
             }

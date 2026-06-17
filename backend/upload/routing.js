@@ -2,8 +2,9 @@ import express from 'express';
 import { extractImageText } from './services/extractImageText';
 import { extractPdfText } from './services/extractPdfText';
 import { extractCsvText } from './services/extractCsvText';
+import { authMiddleware } from '../graphql/resolvers/auth/authMiddleware';
 const router=express.Router();
-router.post("/upload-file", upload.single("file"), async (req, res, next) => {
+router.post("/upload-file", authMiddleware,upload.single("file"), async (req, res, next) => {
   try {
     const file = req.file;
 

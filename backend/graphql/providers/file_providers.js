@@ -1,4 +1,4 @@
-import { file_services } from "../services/file_services";
+import { file_services } from "../services/file_services.js";
 export const file_provider = {
     async getExtraction() {
         try {

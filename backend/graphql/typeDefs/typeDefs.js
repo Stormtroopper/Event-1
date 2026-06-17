@@ -3,9 +3,9 @@ type User {
     id: ID!
     name: String!
     email: String!
-    isEmailVerified: Boolean!
-    createdAt: String!
-    updatedAt: String!
+    isEmailVerified: Boolean
+    createdAt: String
+    updatedAt: String
 }
     type FileExtraction{
         id: ID!
@@ -16,9 +16,8 @@ type User {
         updatedAt: String!
     }
         type AuthPayload{
-        users:[User!]!
-        user(id:ID!):User
-        extractions:[FileExtraction!]!
+         token: String!
+    user: User!
         }
         type Query{
         getExtraction:[FileExtraction!]!
