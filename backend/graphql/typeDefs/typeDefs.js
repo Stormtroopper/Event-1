@@ -3,9 +3,9 @@ type User {
     id: ID!
     name: String!
     email: String!
-    isEmailVerified: Boolean
-    createdAt: String
-    updatedAt: String
+    isEmailVerified: Boolean!
+    createdAt: String!
+    updatedAt: String!
 }
     type FileExtraction{
         id: ID!

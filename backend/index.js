@@ -11,10 +11,7 @@ const app = express();
 const mongoUri = process.env.MONGO_URI;
 console.log(mongoUri);
 
-app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
-    credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 if (!mongoUri) {
     process.exit(1);
