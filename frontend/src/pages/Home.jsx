@@ -1,15 +1,16 @@
+import NavBar from "@/component/NavBar";
 import React from "react";
 import { Link } from "react-router-dom";
-const Home = () => {
+const Home = ({ loggedIn, setLoggedIn }) => {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-5 border-b border-slate-800">
+      {/* <nav className="flex items-center justify-between px-8 py-5 border-b border-slate-800">
         <h1 className="text-2xl font-bold text-blue-400">
           PDF Extractor
-        </h1>
+        </h1> */}
 
-        <div className="flex gap-4">
+      {/* <div className="flex gap-4">
           <Link
             to="/login"
             className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white"
@@ -24,37 +25,60 @@ const Home = () => {
             Register
           </Link>
         </div>
-      </nav>
+      </nav> */}
+      <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
 
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center px-6 py-24 text-center">
-        <h2 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">
-          Extract Text from PDFs
-          <span className="block text-blue-400">
-            Quickly and Securely
-          </span>
-        </h2>
+        {loggedIn ?
+          <>
+            
+            <h2 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">
+              Welcome Back Noob!
+            </h2>
 
-        <p className="max-w-2xl mt-6 text-lg text-slate-400">
-          Upload your PDF files and extract readable text in seconds. View your
-          extraction history and access your previously processed files anytime.
-        </p>
+          </>
+          : <>
 
-        <div className="flex flex-col gap-4 mt-8 sm:flex-row">
-          <Link
-            to='/upload'
-            className="px-6 py-3 font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition"
-          >
-            Upload Text
-          </Link>
+            <h2 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">
+              Extract Text from PDFs
+              <span className="block text-blue-400">
+                Quickly and Securely
+              </span>
+            </h2>
 
-          <Link
-            to='/history'
-            className="px-6 py-3 font-semibold border border-slate-700 rounded-lg hover:bg-slate-800 transition"
-          >
-            View History
-          </Link>
-        </div>
+            <p className="max-w-2xl mt-6 text-lg text-slate-400">
+              Upload your Files and extract readable text in seconds. View your
+              extraction history and access your previously processed files anytime.
+            </p>
+          </>}
+        {
+          loggedIn ?
+            <div className="flex flex-col gap-4 mt-8 sm:flex-row">
+              <Link
+                to='/upload'
+                className="px-6 py-3 font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition"
+              >
+                Upload File
+              </Link>
+
+              <Link
+                to='/history'
+                className="px-6 py-3 font-semibold border border-slate-700 rounded-lg hover:bg-slate-800 transition"
+              >
+                View History
+              </Link>
+            </div>
+            : <div className="flex flex-col gap-4 mt-8 sm:flex-row">
+              <Link
+                to='/'
+                className="px-6 py-3 font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition"
+              >
+                About Us
+              </Link>
+
+
+            </div>}
       </section>
 
       {/* Feature Section */}
@@ -64,7 +88,7 @@ const Home = () => {
             Easy Upload
           </h3>
           <p className="mt-3 text-slate-400">
-            Upload PDF files directly from your device with a simple and clean
+            Upload files directly from your device with a simple and clean
             interface.
           </p>
         </div>
@@ -74,7 +98,7 @@ const Home = () => {
             Fast Extraction
           </h3>
           <p className="mt-3 text-slate-400">
-            Extract text content from PDF documents quickly and efficiently.
+            Extract text content from documents quickly and efficiently.
           </p>
         </div>
 

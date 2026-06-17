@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LOGIN_USER } from "../graphql/mutations/mutations.js";
-import {  useMutation } from '@apollo/client/react'
-const Login = () => {
+import { useMutation } from '@apollo/client/react'
+const Login = ({ setLoggedIn }) => {
   const navigate = useNavigate();
   const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
   const [formData, setFormData] = useState({
@@ -17,29 +17,30 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     try {
-      
+
       e.preventDefault();
-  
+
       console.log("Login Data:", formData);
-  
+
       // backend login API here
-      const data=await loginUser({
+      const data = await loginUser({
         variables: {
-            email: formData.email,
-            password: formData.password,
-          },
+          email: formData.email,
+          password: formData.password,
+        },
       })
-       const token = data.loginUser.token;
-      const user = data.loginUser.user;
+      const token = data.data.loginUser.token;
+      const user = data.data.loginUser.user;
 
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-      navigate("/upload");
+      setLoggedIn(true);
+      navigate("/");
     } catch (error) {
       console.error(`Error logging in ${error.message}`);
-      
+
     }
   };
 
@@ -59,7 +60,7 @@ const Login = () => {
             <p className="mt-2 text-slate-400">
               Login to continue extracting text from PDFs.
             </p>
-                      {error &&(<p className="bg-red-500/20 text-red-400 p-3 rounded-md mb-4">{error.message}</p>)}
+            {error && (<p className="bg-red-500/20 text-red-400 p-3 rounded-md mb-4">{error.message}</p>)}
           </div>
         </div>
 
@@ -99,9 +100,9 @@ const Login = () => {
             disabled={loading}
             className="w-full py-3 font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition"
           >
-            {loading?'Login':'Submit'}
+            {loading ? 'Login' : 'Submit'}
           </button>
-       
+
         </form>
 
         <p className="mt-6 text-center text-slate-400">

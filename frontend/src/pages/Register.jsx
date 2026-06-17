@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGNUP_USER } from '../graphql/mutations/mutations.js'
 import { useMutation } from '@apollo/client/react'
+// import { GET_USERS } from "../graphql/query/query.js";
 
-const Register = () => {
+const Register = ({setLoggedIn}) => {
   const navigate = useNavigate();
-  const [createUser, { loading, error }] = useMutation(SIGNUP_USER)
+  const [createUser, { loading, error }] = useMutation(SIGNUP_USER);
+  // const {data:user_data,error:usersError} = useQuery(GET_USERS);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,7 +24,23 @@ const Register = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+    //       if (usersLoading) {
+    //   alert("Please wait, checking existing users...");
+    //   return;
+    // }
+// console.log(usersError);
 
+    // if (usersError) {
+    //   alert("Could not check existing users");
+    //   return;
+    // }
+      const emailExist=user_data?.getUsers?.filter((user)=>user.email.toLowerCase()===formData.email.toLowerCase()||[]);
+      // console.log(emailExist.length);
+      
+      // if (emailExist.length>0) {
+      //   alert('This email already exists');
+      //   return;
+      // }
       if (formData.password !== formData.confirmPassword) {
         alert("Passwords do not match");
         return;
@@ -33,17 +50,19 @@ const Register = () => {
 
       // Later: call your backend register API here
       // Example:
-      // const response = await fetch(`${api}/register`, {...})
-      const data = await createUser({
+      const new_data = await createUser({
         variables: {
           email: formData.email,
           password: formData.password,
           name: formData.name
         },
       })
-      const name = data.createUser.name;
+      console.log(new_data);
+
+      const name = new_data.data.createUser.name;
       alert(`Successfully registered the user ${name} fuckface!`)
-      navigate("/");
+      setLoggedIn(true);
+      navigate("/login");
     } catch (error) {
       console.error(`Error signing up ${error.message}`);
     }

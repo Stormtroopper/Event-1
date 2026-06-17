@@ -5,7 +5,7 @@ export const extractionOptions = [
       description:
         "Upload PDF files and extract readable text content quickly and accurately.",
       icon: "📄",
-      path: "/upload/pdf",
+      accept:'.pdf'
     },
     {
       id: 2,
@@ -13,7 +13,7 @@ export const extractionOptions = [
       description:
         "Convert images containing text into editable text using OCR extraction.",
       icon: "🖼️",
-      path: "/upload/image",
+      accept:'.png'
     },
     {
       id: 3,
@@ -21,6 +21,6 @@ export const extractionOptions = [
       description:
         "Extract and convert CSV file data into a clean readable text format.",
       icon: "📊",
-      path: "/upload/csv",
+      accept:'.csv'
     },
   ];
